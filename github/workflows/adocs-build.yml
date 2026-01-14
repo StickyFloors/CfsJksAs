@@ -14,7 +14,7 @@ jobs:
 
       - name: Build AsciiDoc to HTML
         # This action installs Asciidoctor and converts files
-        uses: tonynv/asciidoctor-action@master
+        uses: /StickyFloors/CfsJksAs/tree/asciidoc_deploy/priv/static/adoc
         with:
           program: "asciidoctor -D build --backend=html5 docs/index.adoc" # Customize this command as needed
         # -D build specifies the output directory
