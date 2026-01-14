@@ -1,0 +1,30 @@
+name: Build AsciiDoc and deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # or master, the branch where your source .adoc files are
+
+jobs:
+  adoc_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build AsciiDoc to HTML
+        # This action installs Asciidoctor and converts files
+        uses: tonynv/asciidoctor-action@master
+        with:
+          program: "asciidoctor -D build --backend=html5 docs/index.adoc" # Customize this command as needed
+        # -D build specifies the output directory
+        # docs/index.adoc is the source file
+
+      - name: Deploy docs to gh-pages
+        # This action handles the deployment to the gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          # GitHub automatically provides a GITHUB_TOKEN with the necessary permissions
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./build # The directory containing the generated HTML files
